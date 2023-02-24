@@ -7,7 +7,9 @@
 
 // here, the order completion depends on the status of payment
 
-function orderPlaced(callGetPaymentStatus) {
+
+//Synchronous callback functions
+function orderPlaced(callGetPaymentStatus) {  // this function depends on the getpaymentstatus which is passes as an argument in the function
     let result = callGetPaymentStatus();
     result ?
         console.log("payment successful, order has been placed") :
@@ -20,6 +22,10 @@ function getPaymentStatus() {
 
 orderPlaced(getPaymentStatus)
 
+
+
+
+//ASynchronous callback functions
 // Creating our own ice cream parlour
 let stocks = {
     fruits: ['banana', "mango", "pineapple", "grapes"],
@@ -28,16 +34,16 @@ let stocks = {
     toppings: ["choco chips", "sprinkles", "dry fruits"]
 }
 
-function order(fruitName, call_production) {
+function order(fruitName, call_production) {   //pineapple , production function
     setTimeout(function () {
         console.log(`${stocks.fruits[fruitName]} has been picked by customer`);
-        call_production()   
+        call_production()  
      }, 2000)
 }
 
 function production() {
     setTimeout(function () { 
-        console.log("production has started");  
+        console.log("production has started");                    
         setTimeout(function () {
             console.log("the fruits have been chopped");  
             setTimeout(function () {
@@ -59,4 +65,45 @@ function production() {
     }, 0000) 
 }
 
-order(2,production)
+order(2,production) //order starts from here
+
+/*As calls become more nested, the code becomes deeper and increasingly more difficult to manage, especially if we have real code instead of ... that may include more loops, conditional statements and so on.
+
+That’s sometimes called “CALLBACK HELL” or “PYRAMID OF DOOM.” 
+
+
+Disadvantages of callback hell: It is hard to debug and add error handling to. It also reduces code readability
+Callback Hell  – The main disadvantage of using callback is Callback Hell. Callback hell is essentially nested callbacks where each callback is dependent on previous callback.
+
+promiseChaining is used to get rid of callback hells
+
+*/
+
+console.log("Lecture 3");
+
+function getUsername(getAge) {
+  const data = { username: "Avi" };
+  //callback = getAge
+  getAge(data, getGrade);
+}
+
+function getAge(data, getGrade) {
+  //callback = getGrade
+  getGrade({ ...data, age: 21 }, getPercentage);
+}
+
+function getGrade(data, getPercentage) {
+  //callback = getPercentage
+  getPercentage({ ...data, grade: "A+" }, printData);
+}
+
+function getPercentage(data, printData) {
+  // callback = printData
+  printData({ ...data, percentage: "90%" });
+}
+
+function printData(data) {
+  console.log("DATA>>>", data);
+}
+
+getUsername(getAge);
