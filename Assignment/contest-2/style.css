@@ -1,0 +1,19 @@
+#menu{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    flex-wrap: wrap;
+    
+}
+.card{
+    width: 28%;
+    min-width: 25%;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 20px;
+    
+}
+.card img{
+    width: 100%;
+    align-items: center;
+}

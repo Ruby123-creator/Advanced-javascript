@@ -15,11 +15,75 @@ Rejected: You don't give a party to them
 
 So promise start with the pending state then after fulfilled and at the end it in the Rejected state.
 
-
 Operating System(Your friend)------->Google chrome(Promises)--------->User(you)
+
+The new Promise constructor returns a promise object which has the following properties:
+- state: Initially, the promise is in the pending state, then it can be in the fulfilled state when resolve() is called or it can be in the rejected state if reject() is called.
+- result: Initially it is undefined, when resolve( value ) is called it contains the value or it contains an error if reject( error ) is returned.
+
+
  */
 
+
 //how to create promises object
+
+//Syntax to write promises
+/*
+let custom_name = new Promise(write the function which takes 2 parameters eg- resolve and reject
+   ()=>{
+  if(condition){
+    resolve(" resolve data"); // these are functions which will be call  when the condition is true
+  }
+  else{
+    reject("error data");  
+  }
+
+
+  //to use settimeout function
+  setTimeout(()=>{
+     if(condition){
+    resolve(" resolve data"); // these are functions which will be call  when the condition is true
+  }
+  else{
+    reject("error data");  
+  }
+  } ,delay time)
+})
+
+
+method-1
+let onfulfillment = (value)=>{    // value is resolve data
+  console.log(value)
+}
+let rejection = (error)=>{
+  console.log(error);
+}
+
+to call promises:----
+we call the promise by using then and catch method
+
+custom_name.then(onfulfillment)
+custom_name.catch(rejection)
+
+
+
+method2
+custom_name.then(onfulfillment wala function yhii likh do(value)=>{    // value is resolve data
+  console.log(value)).catch(just write the rejection function here only  (error)=>{
+  console.log(error);
+} )
+
+
+promise argument is called executor function. The executor function f is executed synchronously upon calling new Promise(f). type of promise is function.
+Promises ease the task of writing complex asynchronous code. True until and unless promise chaining comes.
+promise is a webAPi method().
+If the method then() is invoked at a time its promise is settled, then it executes the corresponding callback argument synchronously.
+
+
+
+
+//
+*/
 
 let myPromise = new Promise(function(resolve, reject) {
     
@@ -31,7 +95,7 @@ let myPromise = new Promise(function(resolve, reject) {
       }, 7000);
   });
 
-  
+  console.log(myPromise)
 
   function search() {
     console.log("Searching...");
@@ -100,7 +164,7 @@ function makePromise(partyPromise) {
         partyPromise1
         .then((resolve) => console.log(resolve))
         .catch(reason => console.log(reason))
-        .finally(() => console.log("Friends are ready for party !"));
+        .finally(() => console.log("lets back to  home !"));
  
        }
 
@@ -108,9 +172,6 @@ function makePromise(partyPromise) {
        /**
 
 
-Promise.race
-
-The Promise.race(iterable) the method returns a promise that resolves or rejects as soon as one of the promises in the iterable resolves or rejects, with the value or reason from that promise.
 
 Key points:
 

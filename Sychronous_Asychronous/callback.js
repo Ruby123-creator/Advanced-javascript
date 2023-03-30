@@ -107,3 +107,23 @@ function printData(data) {
 }
 
 getUsername(getAge);
+
+//callback hell
+
+function getUsers(callback) { // callback == function
+    setTimeout(() => {
+      callback([
+        { username: 'john', email: 'john@test.com' },  // users array in which find iterate
+        { username: 'jane', email: 'jane@test.com' },
+      ]);
+    }, 1000);  // query solved after 1 sec
+  }
+  
+  function findUser(username, callback) { //2
+    getUsers((users) => {  // whole function used as parameter in get users
+      const user = users.find((user) => user.username === username);
+      callback(user);
+    });
+  }
+  
+  findUser('john', console.log);//1

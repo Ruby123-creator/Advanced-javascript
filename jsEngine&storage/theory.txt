@@ -1,0 +1,195 @@
+What is Javascript enging??
+JavaScript is not understandable by computer but the only browser understands JavaScript. So, we need a program to convert our JavaScript program into computer-understandable language. A JavaScript engine is a computer program that executes JavaScript code and converts it into computer understandable language.
+
+List of JavaScript Engines:
+
+Browser	                                                Name of Javascript Engine
+Google Chrome	                                                  V8
+Edge (Internet Explorer)	                                     Chakra
+Mozilla                                                      Firefox	Spider Monkey
+Safari                                                        Javascript Core Webkit
+
+what is web browser??
+A browser engine transforms the HTML and CSS source code into a visual and interactive representation on your computer's screen. It is also built to perform quickly and meet web standards. If you research browser engines online, take note that you'll see hits for "rendering engines" and "layout engines", two processes that are a part of browser engine functionality.
+
+How things actually happen in the browser? How do our scripts run?
+
+https://medium.com/geekculture/how-javascript-works-%EF%B8%8F-1b4a5429f7
+
+
+Runtime in the browser: A container which includes all the necessary pieces to execute a javascript code.
+
+When Javascript is run on a browser, the following components come into play:
+
+The Javascript Engine with its Call stack and its Memory heap
+The Event Loop
+The Callback Queue
+The Web API
+The microtask queue
+
+javascript engine:It is the heart of runtime environment of js execution
+Memory Heap is a place to store all information and write information. That way we have a place to allocate memory, use memory and release memory.
+Heap memory is used to store the data of functions , arrays and objects
+
+Call Stack need to keep track of where we are in the code.It is used to store the reference of the functins, arrays and objects
+
+Memory Leak
+Memory leak are piece of memory that the application have used in the past but its not needed any longer but has not been returned back to us to the poor free memory.
+
+Running below snippet, we are going to run an infinite loop that keeps pushing i-1 over and over until we fill up our memory and there is nothing left for us to use, which crash our browser.
+1.Don’t have too many global variables
+2.Event listener
+You never remove addEventListener , when you don’t need them. So keep adding event listeners
+
+3. setInterval
+It will run continuously , so we need to use clearInterval when you don’t need them.
+
+
+Javascript is single thread language, as it has only one call stack. Call stack allows us to run a code one at a time and because of this Javascript is synchronous, so only one thing can happen at a time.
+
+It’s not only JS engine which run the code, Javascript runtime is also there which will take care of running tasks.
+We know that the Call Stack is a place where all the Javascript execution take place. If Call Stack has some operation/task to do then other operation in web browser will stop rendering. For example, if you have very large for-loop between 1 to some million then the function in Call Stack will perform its operation till for-loop end, this will cause the web browser unresponsive if the operation takes long time to execute.
+
+To override the above drawbacks the web browser introduced Web API’s, the WEB API’s are used to handle Javascript operations whenever there is a task taking long time to execute in Call Stack by implementing few . Web API’s method such as,
+
+setTimeout,
+AJAX call (xmlhttprequest)
+Dom Elements
+
+lets take an example:
+console.log("Program starts from here");
+
+setTimeout(function timerFunction() {
+  console.log("Timer Done!");
+}, 5000);
+
+console.log("2");
+
+fetch("https://dummyjson.com/products")
+  .then((response) => response.json())
+  .then(function showData(data) {
+    console.log("DATA", data);
+  });
+
+  console.log("program ends here")
+
+In Javascript, the execution take place from top to bottom or line by line. First the interpreter will print the msg "program starts here" then it will point to setTimeout method and setTimeout is a Web API so it will move to Web API from Call Stack. And next the
+fetch method is also a web api si it will also store in WEB API.
+
+Meanwhile in Web API’s, after 5 ms the Web API(setTimeout)  method to Callback Queue. and fetch method in microtask queue.Callback Queue is a place where all the function pop out from Web API’s will reside, it follows queue data structure which is FIFO (first in first out) that means the first function push to Callback queue from Web API’s will be the first function will pop from Callable queue to Call Stack through Event Loop.
+
+Difference between microtask queue and callback queue;
+In asynchronous JavaScript, there are two ways to schedule tasks – microtask queue and callback queue. Both queues are handled differently by the JavaScript engine.
+
+Microtask Queue
+A Microtask queue is a queue of tasks that are executed after the current task. The microtask queue is handled by the JavaScript engine before it moves on to the next task in the callback queue.
+Microtask queue contains all the web APIs that are blocking in nature. Which means the main thread gets blocked for a certain time, till all blocking callback gets executed. Some blocking web APIs are Promise, IntersectionObserver, MutationObserver, etc.
+
+Note: Callbacks in the callback queue can also go into starvation if callbacks keep on queuing forever in the microtask queue.
+
+
+ console.log('start');
+ 
+      setTimeout(function() {
+         console.log('setTimeout');
+      }, 0);
+ 
+      Promise.resolve().then(function() {
+         console.log('promise resolve');
+      });
+ console.log('end')
+
+In the example above, the ‘setTimeout’ callback is added to the callback queue. The ‘Promise.resolve’ is added to the microtask queue. The JavaScript engine will first execute all tasks in the microtask queue before moving on to the callback queue.
+
+Therefore, the output of the code above would be (in the console) −
+
+start
+end
+promise resolve
+setTimeout
+
+Callback Queue
+A callback queue is a queue of tasks that are executed after the current task. The callback queue is handled by the JavaScript engine after it has executed all tasks in the microtask queue.
+
+Difference between Microtask Queue and Callback Queue
+Some points of difference between a microtask queue and a callback queue are −
+
+1.Microtask queue is handled by the JavaScript engine before it moves on to the next task in the callback queue. The Callback queue is handled by the JavaScript engine after it has executed all tasks in the microtask queue.
+
+2.Microtask queue is processed after the current task is finished. The Callback queue is processed after the microtask queue is empty.
+
+3.Microtask queue is processed in a separate event loop. The Callback queue is processed in the same event loop.
+
+What is event loop??
+The event loop is the master caretaker or manager of the javascript engine and decides which section or part of code will run first. It monitors and manage the call stack, the callback queue, and microtask queue.
+
+In our example, when greetCallback moves to the callback queue, the event loop first checks if any code needs to run; if yes, it then also checks if the call stack is empty or not. Once the event loop confirms the call stack is empty, it first pushes GEC in call stack.
+
+Next, the event loop dequeues callback from callback queue and pushes code into the call stack for execution.
+The event loop examines the callback queue one more time but finds nothing; and hence GEC is popped out at the end.
+
+Till the timer is okay, but we also use fetch web API very frequently to interact with a server. Now let’s look at an example where we would need to use both the timer and fetch web API.
+
+In this example, we see fetch and setTimeout, which are both registered in web APIs. However, fetch callback moves to microtask queue and once the timer expires, setTimeout callback moves to callback queue.
+
+When the event loop checks, it first looks for callbacks in the microtask queue, which has a higher priority than the callback queue. As we can see in Fig. 3, the event loop first pushes the callback from the microtask queue to the call stack for execution.
+Once all callbacks are completed from microtask queue, event loop then checks callback queue, if any piece of code needs to execute. If yes, it pushes all callbacks one by one from the callback queue to the call stack for execution.
+
+
+
+
+Storage
+Local storage:
+localStorage object is a method of storing key/value pairs of information locally in the web browser. It allows us to store data with no expirations, whereas session storage stores the data with only one session. This means that data persists even after the user refreshes the page or closes the browser.
+
+have you wondered whenever u open your browser and want to opem your gmail ,in just one click u will be in your gmail profile without entering email and password again and again if you once logged your gmail ,thats not too much surpising its just because of local storage (means your peronal storage in the browser)
+
+
+Some methods of local storage
+1.  localStorage.setItem(“key”, “value”): It takes two parameters; key and value pairs to store the values associated with keys. Data has to be stored in a plain string form, this means that we need to stringify the object and then store it in the localStorage:
+
+
+window.localStorage.setItem('name', 'Shubham Pandey');
+console.log(localStorage.name);
+
+
+2.localStorage.getItem(“key”): It allows us to access the data (value) stored in the localStorage when we pass in the key, which is the only parameter needed
+
+3. localStorage.removeItem(“key”): This method removes the key with its value from the storage when it receives a key.
+
+4. localStorage.clear(): You do not need to pass any parameter, this method deletes everything and empties the entire key/value pairs from the local storage.
+
+5. localStorage.key(“index”): It retrieves the name of the key of a given position.
+
+
+
+
+Limitations of localStorage -:
+
+01. Don’t store sensitive information of users.
+
+02. It is limited to 10MB across all the Browsers.(The storage capacity of totally depends upon browsers,the storage capacity of localStorage in google chrome , Opera is 10MB )
+
+03. It is synchronous in nature.
+
+
+
+https://medium.com/@psubham94/the-ultimate-guide-to-understanding-local-storage-2a27fdb80544
+
+
+What is authentication?
+Authentication JavaScript is nothing but JavaScript using the client ID to obtain Google ID token through Google Auth 2.0 server and then sending this generated token in request calls. Then the endpoint framework use client ID for authenticating the token ID that the JavaScript application has sent.
+
+Authentication encryption
+https://jwt.io/
+
+What is casear-cipher??
+it is used for encryption and decreption technique. 
+What is Caesar cipher explain with example?
+It is a type of substitution cipher in which each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet. For example, with a left shift of 3, D would be replaced by A, E would become B, and so on.
+https://medium.com/@ksimsek19/what-is-caesar-cipher-24ae8f9cdff2
+https://www.xarg.org/tools/caesar-cipher/
+
+
+What is hashing??
+https://medium.com/@isuruj/introduction-to-hashing-5b4daf343889

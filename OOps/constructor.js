@@ -42,21 +42,7 @@ function createUser(firstname, lastname, email, password, gender) {
 var user3 = createUser("Jayesh", "Sadhwani", "jaysh@gmail", "1234", "male");
 console.log("USER3", user3);
 
-// function Person(first, last, age, eye) {
-//   this.firstName = first;
-//   this.lastName = last;
-//   this.age = age;
-//   this.eyeColor = eye;
-// }
 
-// // Create a Person object
-// const myFather = new Person("John", "Doe", 50, "blue");
-// console.log("myfather", myFather);
-
-// Object = Instance of a class
-
-// object: real life entity
-// class: blueprint
 
 class Person {
   constructor(fullName, age, eye) {
@@ -68,7 +54,7 @@ class Person {
 
 // Create a Person object
 const myFather = new Person("John Doe", 50, "blue");
-const myMother = new Person("John 2", 49, "2");
+const myMother = new Person("John 2", 49, "black");
 
 // Adding properties to the person object
 myFather.language = "Hindi";

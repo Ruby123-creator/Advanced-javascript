@@ -72,7 +72,7 @@ Promise.allSettled([promise1, promise2, promise3])
     console.log("Error", e);
   });
 
-// Race is basically for the fastest outcome - doesnt matter if my promise gets rejected or resolved it will still go for the fastest outcome. - total time = (min(promise1,promise2,promise3))
+// Race is basically for the fastest outcome - doesnt matter if my promise gets rejected or resolved it will still go for the fastest outcome - total time = (min(promise1,promise2,promise3))
 
 Promise.race([promise1, promise2, promise3])
   .then((res) => {
@@ -80,4 +80,4 @@ Promise.race([promise1, promise2, promise3])
   })
   .catch((e) => {
     console.log("Error", e);
-  });
+  })

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <script>
+    OpeningCeremony();
+    function OpeningCeremony(){
+        setTimeout(()=>{
+            console.log("Let the games begin")
+            let obj ={
+            red:0, blue:0 , green:0 ,yellow:0
+        }
+        Race100M(obj , LongJump)
+
+        },1000)
+
+       
+    }
+    function Race100M(obj , LJump){
+        console.log(obj);
+       setTimeout(()=>{
+        
+        let time =[];
+        for(let x in obj){
+            let arr = [11,12,13,14,15]
+            let time_index = Math.floor(Math.random()*arr.length);
+            let team = {}
+            team.color = x;
+            team.time = arr[time_index]
+            time.push(team);
+        }
+        console.log(time)
+        time.sort((a,b)=>{a.time>b.time?-1:1})
+         console.log(time)
+        obj[time[0].color] =50;
+        obj[time[1].color] = 25;
+       console.log(obj);
+       LJump(obj ,HighJump )
+
+       },3000) 
+
+    }
+    function LongJump(obj ,Hjump){
+        setTimeout(()=>{
+            let arr = ['blue' ,'green','red','yellow']
+        let color = Math.floor(Math.random()*4);
+        let random_color = arr[color];
+        console.log(random_color);
+        obj[random_color] = 150;
+        console.log(obj);
+        Hjump(obj,AwardCeremony)
+
+        },2000)
+    }
+    function HighJump(obj ,Aceremony){
+        console.log(obj);
+        let answer = prompt("What colour secured the highest jump ");
+        console.log(answer);
+        let flag = false;
+        for(let x in obj){
+            if(answer==x){
+                console.log("hello");
+                obj[x] += 100;
+                flag = true;
+            }
+        }
+        if(flag==false){
+            console.log("Event was cancelled");
+                
+        }
+        console.log(obj);
+        Aceremony(obj);
+    }
+    function AwardCeremony(obj){
+        console.log("hello");
+        let sortable = [];
+for (let x in obj) {
+    sortable.push([x, obj[x]]);
+}
+
+sortable.sort(function(a, b) {
+    return b[1] - a[1];
+});
+
+let objSorted = {}
+sortable.forEach(function(item){
+    objSorted[item[0]]=item[1]
+})
+let pos = ["first","second","third","fourth"] 
+let i=0;
+for(let x in objSorted){
+     console.log(`${x} come ${pos[i]} with ${objSorted[x]} score`)
+       i++;
+    }
+console.log(objSorted)
+    }
+  </script>  
+</body>
+</html>

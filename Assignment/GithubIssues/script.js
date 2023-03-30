@@ -1,41 +1,47 @@
-console.log("github");
-const pageNumberH3 = document.getElementById("pageNumber");
-var pageNumber = 1;
+let nextButton = document.querySelector("#load_next");
+let previousButton = document.querySelector("#load_prev");
+let pageNumber = document.querySelector("#page-number");
+let ol = document.querySelector("ol");
 
-async function fetchData(pageNumber) {
+nextButton.addEventListener("click", handleClick);
+previousButton.addEventListener("click", handleClick);
+
+async function handleClick(event) {
+  let action = event.target.innerText;
+  let currentCount = Number(pageNumber.innerText);
+
+  if (action == "Next Page") {
+    // increment page
+    pageNumber.innerText = currentCount + 1;
+    const issues = await getGithubIssuesTitle(currentCount + 1);
+    renderLists(issues);
+  } else if (action == "Previous Page" && currentCount != 1) {
+    // decrease page
+    pageNumber.innerText = currentCount - 1;
+    const issues = await getGithubIssuesTitle(currentCount - 1);
+    renderLists(issues);
+  }
+}
+
+function renderLists(issues) {
+  ol.innerText = "";
+  for (let issueName of issues) {
+    let li = document.createElement("li");
+    li.innerText = issueName;
+    ol.append(li);
+  }
+}
+async function getGithubIssuesTitle(pageNum = 1) {
   const response = await fetch(
-    `https://api.github.com/repositories/1296269/issues?page=${pageNumber}&per_page=5`
+    `https://api.github.com/repositories/1296269/issues?page=${pageNum}&per_page=5`
   );
-  const data = await response.json();
-  console.log("DATA", data);
+
+  const result = await response.json();
+  console.log(result);
+  return result.map((obj) => obj.title);
 }
 
-// var url_string = window.location.href;
-// var url = new URL(url_string);
-
-// var mySearch = url.searchParams.get("q");
-
-// const myInput = document.getElementById("search-input");
-// myInput.value = mySearch;
-
-function loadNext() {
-  pageNumber++;
-  if (pageNumber == 2) {
-    document.getElementById("load_prev").disabled = false;
-  }
-  pageNumberH3.innerText = pageNumber;
-  fetchData(pageNumber);
-}
-
-function loadPrev() {
-  if (pageNumber == 2) {
-    document.getElementById("load_prev").disabled = true;
-  } else {
-    document.getElementById("load_prev").disabled = false;
-  }
-  pageNumber--;
-  pageNumberH3.innerText = pageNumber;
-  fetchData(pageNumber);
-}
-
-fetchData(1);
+// on page load
+getGithubIssuesTitle().then((data) => {renderLists(data)
+console.log(data);
+});

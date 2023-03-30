@@ -44,6 +44,7 @@ function getUsername() {
 }
 
 function getAge(data) {
+  console.log(data);
   return new Promise((resolve, reject) => {
     console.log("2");
     resolve({ ...data, age: 21 });
@@ -80,21 +81,24 @@ getUsername()
   .catch((e) => {
     console.log("ERROR>>>", e);
   });
+/**
+ * The callback passed to the then() method executes once the promise is resolved. In the callback, we show the result of the promise and return a new value multiplied by two (result*2).
 
-// getUsername()
-//   .then((data) => {
-//     console.log("1");
-//     return getAge(data);
-//   })
-//   .then((data2) => {
-//     console.log("2");
-//     return getGrade(data2);
-//   })
-//   .then((data3) => {
-//     console.log("3");
-//     return getPercentage(data3);
-//   })
-//   .then((data4) => {
-//     console.log("4");
-//     return printData(data4);
-//   });
+Because the then() method returns a new Promise with a value resolved to a value, you can call the then() method on the return Promise like this:
+ */
+  let p = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(10);
+    }, 3 * 100);
+});
+
+p.then((result) => {
+    console.log(result); // 10
+    return result * 2;
+}).then((result) => {
+    console.log(result); // 20
+    return result * 3;
+}).then((result) => {
+    console.log(result); // 60
+    return result * 4;
+});

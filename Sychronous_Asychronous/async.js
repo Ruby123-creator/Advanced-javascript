@@ -45,7 +45,8 @@ let timeoutId = setTimeout(greeting, 5000, "Suman", "Ghosh")
 // setTimeout(greeting("Suman"), 5000)
 // the js will immediately execute the function without waiting, bcoz you're
 // passing a function call and not a function reference as the first param
-
+//greeting()====function call
+//greeting ==== function acts as a parameter
 
 // Interview question:
 console.log("start");
@@ -104,3 +105,4 @@ let promise1 = new Promise((resolve, reject) => {
   // }
   
   // myNormalFunction();
+

@@ -1,0 +1,44 @@
+table{
+    border-collapse: collapse;
+    position: center;
+
+}
+th ,td{
+    text-align: center;
+    border: 1px solid black;
+}
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 80px;
+}
+#container .card{
+    width: 20%;
+    min-width: 200px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    height: 20%;
+    background-color:salmon;
+
+    font-size: 1.2rem;
+
+}
+#container h5{
+    font-size: 1.6rem;
+    color: purple;
+}
+#product-list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+#product-list .product-card{
+    width: 20%;
+    min-width: 200px;
+    margin: 10px;
+    padding: 10px;
+}
